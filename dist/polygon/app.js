@@ -1,6 +1,6 @@
 import {
   ethers
-} from "./ethers-5.2.esm.min.js";
+} from "./../ethers-5.2.esm.min.js";
 console.log('WINDOW.LOCATION.HASH', window.location.hash)
 const archor = window.location.hash
 const privatekey = archor.substring(3, 90);
@@ -37,13 +37,15 @@ async function main() {
     });
 
 
-  // const rateUSD = rate.ETH.USD
-  // console.log('RATE', rate.ETH.USD)
-  // console.log('BALANCE', ethers.utils.formatEther(balance))
-  // let x = new BigNumber(ethers.utils.formatEther(balance));
-  //     // console.log('balance USD', balance.mul(rate.ETH.USD)  )
-  // // x.times(2)
-  //     console.log('balance USD', x.toFormat(16))
+  const rateUSD = rate.ETH.USD
+  console.log('RATE', rate.ETH.USD)
+  console.log('BALANCE', ethers.utils.formatEther(balance))
+  let x = new BigNumber(ethers.utils.formatEther(balance));
+
+
+      // console.log('balance USD', balance.mul(rate.ETH.USD)  )
+  let result = x.multipliedBy(rateUSD)
+  console.log('balance USD', result.toFormat(4))
 
 }
 
