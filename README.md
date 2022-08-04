@@ -14,4 +14,8 @@ Sponsoring (Buy me a coffee)
 Wallet replacement
 
 # TODO
+-[ ] Claim feature
+-[ ] Claim query
+
+
 -[ ] readable ether.js file
