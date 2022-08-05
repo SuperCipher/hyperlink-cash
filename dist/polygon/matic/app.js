@@ -12,11 +12,12 @@ async function main() {
   // const provider = ethers.getDefaultProvider(network, {
   //   infura: "d64d8c2ddfaf4a68b1a8f59efb34c531",
   // });
+
   let walletPrivateKey
   try {
     walletPrivateKey = new ethers.Wallet(privatekey)
   } catch (error) {
-    console.error("test >>>",error);
+    console.error("test >>>", error);
     document.getElementById("privatekey-error-alert").classList.remove("hidden");
   }
 
