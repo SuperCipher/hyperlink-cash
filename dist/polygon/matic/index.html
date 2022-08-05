@@ -14,8 +14,8 @@
   <nav class="bg-white border-gray-200 px-2 sm:px-4 py-2.5 dark:bg-gray-900">
     <div class="container flex flex-wrap justify-between items-center mx-auto">
       <a href="https://hyperlink.cash" class="flex items-center">
-          <img src="../hyperlink-cash-logo.svg" class="mr-3 h-6 sm:h-9" alt="Flowbite Logo">
-          <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">Hyperlink.cash</span>
+          <img src="../../hyperlink-cash-logo.svg" class="mr-3 h-6 sm:h-9" alt="Flowbite Logo">
+          <span class="self-center text-xl text-blue-800 font-semibold whitespace-nowrap dark:text-white">Hyperlink.cash</span>
       </a>
       <button data-collapse-toggle="navbar-default" type="button" class="inline-flex items-center p-2 ml-3 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-default" aria-expanded="false">
         <span class="sr-only">Open main menu</span>
@@ -36,11 +36,20 @@
       </div>
     </div>
   </nav>
-
-  <section id="center-container" class="container mx-auto">
-
+  <section id="privatekey-error-alert" class="container mx-auto hidden">
+    <div class="p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800" role="alert">
+      <span class="font-medium">Private key corrupt!</span> Please make sure your copy url correctly.
+    </div>
+  </section>
+  <section class="container mx-auto">
     <div class="mx-4 md:mx-auto sm:w-11/12 md:w-2/5 bg-white rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
-      <div class="flex flex-col justify-end p-10 pb-5">
+      <div class="flex flex-row justify-end">
+        <span class="mr-auto text-3 text-gray-900 dark:text-white">
+          address
+        </span>
+
+      </div>
+      <div class="flex flex-col justify-end px-10 pb-5">
 
         <div class="flex flex-row justify-end">
           <span class="mr-auto text-3xl font-bold text-gray-900 dark:text-white">

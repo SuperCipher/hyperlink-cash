@@ -1,25 +1,31 @@
 import {
   ethers
-} from "./../ethers-5.2.esm.min.js";
-console.log('WINDOW.LOCATION.HASH', window.location.hash)
+} from "./../../ethers-5.2.esm.min.js";
 const archor = window.location.hash
 const privatekey = archor.substring(3, 90);
-console.log("privatekey", privatekey);
 
 async function main() {
+
 
   // Use the mainnet
   // const network = "maticmum";
   // const provider = ethers.getDefaultProvider(network, {
   //   infura: "d64d8c2ddfaf4a68b1a8f59efb34c531",
   // });
+  let walletPrivateKey
+  try {
+    walletPrivateKey = new ethers.Wallet(privatekey)
+  } catch (error) {
+    console.error("test >>>",error);
+    document.getElementById("privatekey-error-alert").classList.remove("hidden");
+  }
 
   // HACK infuraprovider not work
   const provider = new ethers.providers.JsonRpcProvider("https://polygon-mumbai.infura.io/v3/d64d8c2ddfaf4a68b1a8f59efb34c531")
-  await provider.getBalance("0x7Da81FA63Ee343De9ca33ab7A16be3D022549828").then((balance) => {
-    console.log('balance', balance)
-  })
-  const balance = await provider.getBalance("0x7Da81FA63Ee343De9ca33ab7A16be3D022549828")
+  const wallet = walletPrivateKey.connect(provider)
+
+
+  const balance = await wallet.getBalance()
   const rate = await fetch("https://min-api.cryptocompare.com/data/pricemulti?fsyms=ETH&tsyms=USD", {
       "credentials": "include",
       "headers": {
@@ -39,15 +45,10 @@ async function main() {
   const rateUSD = rate.ETH.USD
   console.log('RATE', rate.ETH.USD)
   console.log('BALANCE', ethers.utils.formatEther(balance))
-  let balanceMatic = new BigNumber(ethers.utils.formatEther(balance));
-
-
-      // console.log('balance USD', balance.mul(rate.ETH.USD)  )
-  let result = balanceMatic.multipliedBy(rateUSD)
-  console.log('balance USD', result.toFormat(2))
+  const balanceMatic = new BigNumber(ethers.utils.formatEther(balance));
+  const showBalanceMatic = balanceMatic.multipliedBy(rateUSD)
   document.getElementById("balance-matic").innerHTML = `${balanceMatic.toFormat(12)}`
-
-  document.getElementById("balance-usd").innerHTML = `${result.toFormat(2)}`
+  document.getElementById("balance-usd").innerHTML = `${showBalanceMatic.toFormat(2)}`
 
 
 }
