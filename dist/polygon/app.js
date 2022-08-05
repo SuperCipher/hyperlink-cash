@@ -45,7 +45,7 @@ async function main() {
       // console.log('balance USD', balance.mul(rate.ETH.USD)  )
   let result = balanceMatic.multipliedBy(rateUSD)
   console.log('balance USD', result.toFormat(2))
-  document.getElementById("balance-matic").innerHTML = `${balanceMatic.toFormat(8)}`
+  document.getElementById("balance-matic").innerHTML = `${balanceMatic.toFormat(12)}`
 
   document.getElementById("balance-usd").innerHTML = `${result.toFormat(2)}`
 
