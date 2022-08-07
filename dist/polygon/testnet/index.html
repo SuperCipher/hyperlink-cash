@@ -56,8 +56,14 @@
     <section class="grow container mx-auto">
       <div class="mx-4 mt-36 md:mx-auto sm:w-11/12 md:w-2/5 bg-white rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
         <div class="flex flex-row mb-10 overflow-hidden">
-          <button class="ml-4 mt-2 text-3 text-blue-700 dark:text-blue-700">
-            Address<span class="ml-2 text-3 text-blue-700 dark:text-blue-700">0x7Da81FA63Ee343De9ca33ab7A16be3D022549828</span>
+          <button class="flex flex-row ml-4 mt-2 text-3 text-blue-700 dark:text-blue-700">
+            Address
+            <span id="wallet-address" class="ml-2 text-3 text-blue-700 dark:text-blue-700 self-center">
+              <div role="status" class="max-w-sm animate-pulse self-center">
+                <div class="h-3 bg-gray-200 rounded-full dark:bg-gray-700 w-48"></div>
+                <span class="sr-only">Loading...</span>
+              </div>
+            </span>
           </button>
 
         </div>
@@ -90,8 +96,10 @@
           </div>
 
 
-          <button href="#"
-            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-bold rounded-lg text-3xl px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 shadow-md">
+          <button
+            id="claim-button"
+            href="#"
+            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-bold rounded-lg text-3xl px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 shadow-md hidden">
             Claim
           </button>
 

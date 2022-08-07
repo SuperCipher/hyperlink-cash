@@ -14,8 +14,11 @@ Sponsoring (Buy me a coffee)
 Wallet replacement
 
 # TODO
+## Claim page
 -[ ] Claim feature
 -[ ] Claim query
 
+## Create page
 
+-[ ] ENS and ipfs serve web page
 -[ ] readable ether.js file
