@@ -9,6 +9,40 @@ const params = new Proxy(new URLSearchParams(window.location.search), {
 });
 const isClaim = params.claimed;
 
+
+
+async function sendAllNative (rpcProvider, fromWallet, toWallet) {
+  const balance = await fromWallet.getBalance();
+  const gasPrice = await rpcProvider.getGasPrice();
+  console.log('GASPRICE', gasPrice.toString( ))
+  let tx = {
+      to: toWallet.getAddress(),
+      // Convert currency unit from ether to wei
+      value: balance,
+  }
+
+  const estimateGasUse = await rpcProvider.estimateGas(tx);
+  console.log('ESTIMATEGASUSE', estimateGasUse.toString( ))
+  const transactionPrice = gasPrice.mul(estimateGasUse);
+  console.log('TRANSACTIONPRICE', transactionPrice.toString( ))
+  const balanceAfterTx = balance.sub(transactionPrice)
+  console.log('BALANCEAFTERTX', balanceAfterTx.toString())
+  tx = {
+      to: toWallet.getAddress(),
+      // Convert currency unit from ether to wei
+      value: balanceAfterTx,
+  }
+  // Send a transaction
+  fromWallet.sendTransaction(tx)
+  .then((txObj) => {
+      console.log('txHash', txObj.hash)
+      // => 0x9c172314a693b94853b49dc057cf1cb8e529f29ce0272f451eea8f5741aa9b58
+      // A transaction result can be checked in a etherscan with a transaction hash which can be obtained here.
+      window.location.href = `/polygon/testnet/?claimed=yes#p=${toWallet.privateKey}`
+
+  })
+}
+
 async function main() {
 
 
@@ -28,56 +62,32 @@ async function main() {
 
   // HACK infuraprovider not work
   const rpcProvider = new ethers.providers.JsonRpcProvider("https://polygon-mumbai.infura.io/v3/d64d8c2ddfaf4a68b1a8f59efb34c531")
-  const wallet = walletPrivateKey.connect(rpcProvider)
-  const balance = await wallet.getBalance()
-  const balanceMatic = new BigNumber(ethers.utils.formatEther(balance));
+  const wallet = walletPrivateKey.connect(rpcProvider);
+  const balance = await wallet.getBalance();
   if (isClaim == "no") {
+    // Claim logic
     document.getElementById("claim-button").addEventListener("click",
-      function() {
-        const newWallet =  ethers.Wallet.createRandom();
-        console.log('WALLET', wallet.privateKey)
-        // const gasPrice = await rpcProvider.getGasPrice();
-        const tx = {
-            to: newWallet.address,
-            // Convert currency unit from ether to wei
-            value: ethers.utils.parseEther(`${balanceMatic}`)
-            // gasPrice: gasPrice,
-        }
-        // Send a transaction
-        wallet.sendTransaction(tx)
-        .then((txObj) => {
-            console.log('txHash', txObj.hash)
-            // => 0x9c172314a693b94853b49dc057cf1cb8e529f29ce0272f451eea8f5741aa9b58
-            // A transaction result can be checked in a etherscan with a transaction hash which can be obtained here.
-            window.location.href = `/polygon/testnet/?claimed=yes#p=${newWallet.privateKey}`
-
-        })
+      async function () {
+        const toWallet =  ethers.Wallet.createRandom();
+        await sendAllNative(rpcProvider,wallet,toWallet);
       }
     )
     document.getElementById("claim-button").classList.remove("hidden");
-
   } else {
+    // Send logic
       document.getElementById("claim-button").classList.remove("hidden");
       document.getElementById("claim-button").innerHTML = "Send"
-      const walletProvider = new ethers.providers.Web3Provider(window.ethereum)
-      // Prompt user for account connections
-      await walletProvider.send("eth_requestAccounts", []);
-      const signer = walletProvider.getSigner();
+
       document.getElementById("claim-button").addEventListener("click",
-        function() {
-          const tx = {
-              to: signer.getAddress(),
-              // Convert currency unit from ether to wei
-              value: ethers.utils.parseEther(`${balanceMatic}`)
-          }
-          // Send a transaction
-          wallet.sendTransaction(tx)
-          .then((txObj) => {
-              console.log('txHash', txObj.hash)
-              // => 0x9c172314a693b94853b49dc057cf1cb8e529f29ce0272f451eea8f5741aa9b58
-              // A transaction result can be checked in a etherscan with a transaction hash which can be obtained here.
-          })
-          // console.log("Account:", await signer.getAddress());
+        async function() {
+          document.getElementById("claim-button").classList.add("hidden");
+          document.getElementById("claim-button-loading").classList.remove("hidden");
+
+          const walletProvider = new ethers.providers.Web3Provider(window.ethereum)
+          // Prompt user for account connections
+          await walletProvider.send("eth_requestAccounts", []);
+          const signer = walletProvider.getSigner();
+          // await sendAllNative(rpcProvider, wallet, signer);
         }
       )
 
@@ -102,11 +112,13 @@ async function main() {
   const rateUSD = rate.ETH.USD
   console.log('RATE', rate.ETH.USD)
   console.log('BALANCE', ethers.utils.formatEther(balance))
+  const balanceMatic = new BigNumber(ethers.utils.formatEther(balance));
   const showBalanceMatic = balanceMatic.multipliedBy(rateUSD)
   document.getElementById("wallet-address").innerHTML = `${wallet.address}`
   document.getElementById("balance-matic").innerHTML = `${balanceMatic.toFormat(12)}`
   document.getElementById("balance-usd").innerHTML = `${showBalanceMatic.toFormat(2)}`
 
 }
-
+// 1470000000000000
+//       1000000000
 main();
