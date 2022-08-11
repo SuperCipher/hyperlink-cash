@@ -79,8 +79,8 @@ console.log('BALANCEAFTERTX', balanceAfterTx.toString())
   // Send a transaction
   try {
     const txObj = await fromWallet.sendTransaction(tx);
-    console.log('RPCPROVIDER', txObj)
-    await rpcProvider.waitForTransaction(txObj.hash);
+    await txObj.wait()
+
   } catch (error) {
     switch (error.code) {
 
