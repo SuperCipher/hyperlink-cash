@@ -9,30 +9,6 @@ const params = new Proxy(new URLSearchParams(window.location.search), {
 });
 const isClaim = params.claimed;
 
-function waitForBlock(tx, callback) {
-  var customWsProvider = new ethers.providers.WebSocketProvider("wss://polygon-mumbai.g.alchemy.com/v2/azXFs-kBJxGwkVhambHE3hPk32ViK6P_");
-
-  customWsProvider.on("pending", (tx) => {
-    customWsProvider.getTransaction(tx).then(function(transaction) {
-      console.log('TRANSACTION', transaction)
-      window.location.reload()
-      callback();
-    });
-  });
-
-  customWsProvider._websocket.on("error", async () => {
-    console.log(`Unable to connect to ${ep.subdomain} retrying in 3s...`);
-    setTimeout(init, 3000);
-  });
-  customWsProvider._websocket.on("close", async (code) => {
-    console.log(
-      `Connection lost with code ${code}! Attempting reconnect in 3s...`
-    );
-    customWsProvider._websocket.terminate();
-    setTimeout(init, 3000);
-  });
-};
-
 async function sendAllNative(rpcProvider, fromWallet, toWallet) {
 
   const balance = await fromWallet.getBalance()
@@ -62,7 +38,7 @@ async function sendAllNative(rpcProvider, fromWallet, toWallet) {
 
 const estimateGasUse = await rpcProvider.estimateGas(tx);
 console.log('ESTIMATEGASUSE', estimateGasUse.toString( ))
-const transactionPrice = gasPrice.mul(estimateGasUse);
+const transactionPrice = gasPrice.mul(estimateGasUse).mul(1.1);
 console.log('TRANSACTIONPRICE', transactionPrice.toString( ))
 const balanceAfterTx = balance.sub(transactionPrice)
 console.log('BALANCEAFTERTX', balanceAfterTx.toString())
