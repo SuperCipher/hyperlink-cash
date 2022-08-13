@@ -24,23 +24,23 @@ async function sendAllNative(rpcProvider, fromWallet, toWallet) {
     value: balance,
   }
 
-//   const estimateGasUse = await rpcProvider.estimateGas(tx);
-//   const estimateGasUseBN = new BigNumber(estimateGasUse.toString());
-//   console.log('ESTIMATEGASUSE', estimateGasUseBN.toString())
-// //   const transactionPrice2 = gasPrice.mul(estimateGasUse).mul(1.1);
-// // console.log('TRANSACTIONPRICE2', transactionPrice2)
-//
-//   const transactionPrice = gasPriceBN.times(estimateGasUseBN).times(1.1);
-//   console.log('TRANSACTIONPRICE', transactionPrice)
-//   const balanceAfterTx = balanceBN.minus(transactionPrice)
-//   console.log('BALANCEBN', balanceBN)
-//   console.log('BALANCEAFTERTX', balanceAfterTx)
+  //   const estimateGasUse = await rpcProvider.estimateGas(tx);
+  //   const estimateGasUseBN = new BigNumber(estimateGasUse.toString());
+  //   console.log('ESTIMATEGASUSE', estimateGasUseBN.toString())
+  // //   const transactionPrice2 = gasPrice.mul(estimateGasUse).mul(1.1);
+  // // console.log('TRANSACTIONPRICE2', transactionPrice2)
+  //
+  //   const transactionPrice = gasPriceBN.times(estimateGasUseBN).times(1.1);
+  //   console.log('TRANSACTIONPRICE', transactionPrice)
+  //   const balanceAfterTx = balanceBN.minus(transactionPrice)
+  //   console.log('BALANCEBN', balanceBN)
+  //   console.log('BALANCEAFTERTX', balanceAfterTx)
 
-const estimateGasUse = await rpcProvider.estimateGas(tx);
-const transactionPrice = gasPrice.mul(estimateGasUse).mul(1.1);
-const balanceAfterTx = balance.sub(transactionPrice)
+  const estimateGasUse = await rpcProvider.estimateGas(tx);
+  const transactionPrice = gasPrice.mul(estimateGasUse).mul(1.1);
+  const balanceAfterTx = balance.sub(transactionPrice)
 
-// console.log('BALANCEAFTERTX', ethers.utils.parseEther(balanceAfterTx.toFormat(2)))
+  // console.log('BALANCEAFTERTX', ethers.utils.parseEther(balanceAfterTx.toFormat(2)))
   tx = {
     to: toWallet.getAddress(),
     // gasLimit: transactionPrice.toNumber(),
@@ -88,7 +88,20 @@ async function getRate() {
 
 async function main() {
 
+  let walletPrivateKey
 
+  if (privatekey === "") {
+    walletPrivateKey = ethers.Wallet.createRandom();
+    window.location.href = `/polygon/testnet/?claimed=no#p=${walletPrivateKey.privateKey}`
+  } else {
+    try {
+      walletPrivateKey = new ethers.Wallet(privatekey)
+      Object.freeze(walletPrivateKey)
+    } catch (error) {
+      console.error("test >>>", error);
+      document.getElementById("privatekey-error-alert").classList.remove("hidden");
+    }
+  }
 
   // Use the mainnet
   // const network = "maticmum";
@@ -96,20 +109,13 @@ async function main() {
   //   infura: "d64d8c2ddfaf4a68b1a8f59efb34c531",
   // });
 
-  let walletPrivateKey
-  try {
-    walletPrivateKey = new ethers.Wallet(privatekey)
-    Object.freeze(walletPrivateKey)
-  } catch (error) {
-    console.error("test >>>", error);
-    document.getElementById("privatekey-error-alert").classList.remove("hidden");
-  }
+
 
   // HACK infuraprovider not work
   const rpcProvider = new ethers.providers.JsonRpcProvider("https://polygon-mumbai.infura.io/v3/d64d8c2ddfaf4a68b1a8f59efb34c531")
   const wallet = walletPrivateKey.connect(rpcProvider);
   const balance = await wallet.getBalance();
-  if (isClaim == "no") {
+  if (isClaim === "no") {
     // Claim logic
     document.getElementById("claim-button").addEventListener("click",
       async function() {
