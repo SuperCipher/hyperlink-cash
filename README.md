@@ -15,10 +15,11 @@ Wallet replacement
 
 # TODO
 ## Claim page
--[ ] Claim feature
--[ ] Claim query
+-[ ] Create feature
 
-## Create page
+
+## Trust minimize
 
 -[ ] ENS and ipfs serve web page
 -[ ] readable ether.js file
+-[ ] multiple api data comparison

