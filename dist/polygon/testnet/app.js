@@ -2,9 +2,9 @@ import {
   ethers
 } from "./../../ethers-5.2.esm.min.js";
 
-const CHAIN_NAME = "polygon"
+const CHAIN_NAME = "polygon";
 
-const archor = window.location.hash
+const archor = window.location.hash;
 const privatekey = archor.substring(3, 90);
 
 const params = new Proxy(new URLSearchParams(window.location.search), {
@@ -14,12 +14,12 @@ const isClaim = params.claimed;
 
 async function sendAllNative(rpcProvider, fromWallet, toWallet) {
 
-  const balance = await fromWallet.getBalance()
-  console.log('BALANCE', balance)
+  const balance = await fromWallet.getBalance();
+  console.log('BALANCE', balance);
   const balanceBN = new BigNumber(balance.toString());
-  const gasPrice = await rpcProvider.getGasPrice()
+  const gasPrice = await rpcProvider.getGasPrice();
   const gasPriceBN = new BigNumber(gasPrice.toString());
-  console.log('GASPRICE', gasPriceBN.toFormat(2))
+  console.log('GASPRICE', gasPriceBN.toFormat(2));
   let tx = {
     to: toWallet.getAddress(),
     nonce: rpcProvider.getTransactionCount(fromWallet.getAddress(), "latest"),
@@ -41,7 +41,7 @@ async function sendAllNative(rpcProvider, fromWallet, toWallet) {
 
   const estimateGasUse = await rpcProvider.estimateGas(tx);
   const transactionPrice = gasPrice.mul(estimateGasUse).mul(1.1);
-  const balanceAfterTx = balance.sub(transactionPrice)
+  const balanceAfterTx = balance.sub(transactionPrice);
 
   // console.log('BALANCEAFTERTX', ethers.utils.parseEther(balanceAfterTx.toFormat(2)))
   tx = {
@@ -55,7 +55,7 @@ async function sendAllNative(rpcProvider, fromWallet, toWallet) {
   // Send a transaction
   try {
     const txObj = await fromWallet.sendTransaction(tx);
-    await txObj.wait()
+    await txObj.wait();
 
   } catch (error) {
     switch (error.code) {
@@ -64,7 +64,7 @@ async function sendAllNative(rpcProvider, fromWallet, toWallet) {
         console.log('Unpredictable gas limit at this time');
         break;
       default:
-        console.log('sendAllNative ERROR : ', error)
+        console.log('sendAllNative ERROR : ', error);
     }
     document.getElementById("claim-button").classList.remove("hidden");
     document.getElementById("claim-button-loading").classList.add("hidden");
@@ -91,11 +91,11 @@ async function getRate() {
 
 async function main() {
 
-  let walletPrivateKey
+  let walletPrivateKey;
   if (privatekey === "") {
     walletPrivateKey = ethers.Wallet.createRandom();
-    Object.freeze(walletPrivateKey)
-    window.location.href = `/${CHAIN_NAME}/testnet/?claimed=no#p=${walletPrivateKey.privateKey}`
+    Object.freeze(walletPrivateKey);
+    window.location.href = `/${CHAIN_NAME}/testnet/?claimed=no#p=${walletPrivateKey.privateKey}`;
   } else {
     try {
       walletPrivateKey = new ethers.Wallet(privatekey);
@@ -113,7 +113,7 @@ async function main() {
   // });
 
   // HACK infuraprovider not work
-  const rpcProvider = new ethers.providers.JsonRpcProvider(`https://${CHAIN_NAME}-mumbai.infura.io/v3/d64d8c2ddfaf4a68b1a8f59efb34c531`)
+  const rpcProvider = new ethers.providers.JsonRpcProvider(`https://${CHAIN_NAME}-mumbai.infura.io/v3/d64d8c2ddfaf4a68b1a8f59efb34c531`);
   const wallet = walletPrivateKey.connect(rpcProvider);
   const balance = await wallet.getBalance();
   if (isClaim === "no") {
@@ -122,22 +122,22 @@ async function main() {
       async function() {
         const toWallet = ethers.Wallet.createRandom();
         await sendAllNative(rpcProvider, wallet, toWallet);
-        window.location.href = `/${CHAIN_NAME}/testnet/?claimed=yes#p=${toWallet.privateKey}`
+        window.location.href = `/${CHAIN_NAME}/testnet/?claimed=yes#p=${toWallet.privateKey}`;
       }
     )
     document.getElementById("claim-button").classList.remove("hidden");
   } else {
     // Claim yes
-    navigator.clipboard.writeText(`${window.location}`)
+    navigator.clipboard.writeText(`${window.location}`);
     document.getElementById("copy-url-component").classList.remove("hidden");
     document.getElementById("claim-button").classList.remove("hidden");
-    document.getElementById("claim-button").innerHTML = "Send"
+    document.getElementById("claim-button").innerHTML = "Send";
     document.getElementById("claim-button").addEventListener("click",
       async function() {
         document.getElementById("claim-button").classList.add("hidden");
         document.getElementById("claim-button-loading").classList.remove("hidden");
 
-        const walletProvider = new ethers.providers.Web3Provider(window.ethereum)
+        const walletProvider = new ethers.providers.Web3Provider(window.ethereum);
         // Prompt user for account connections
         await walletProvider.send("eth_requestAccounts", []);
         // wallet is similar to signer

@@ -16,12 +16,12 @@ Wallet replacement
 # TODO
 ## Claim page
 -[ ] Landing page
+-[ ] Mainnet Prod
+-[ ] Share button
 -[ ] Increment fee after claim fail
 -[ ] Toast after create new wallet
 -[ ] Fail Toast
 -[ ] separate send button
--[ ] Mainnet Prod
--[ ] Share button
 
 ## Trust minimize
 
