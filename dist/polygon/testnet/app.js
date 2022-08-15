@@ -148,22 +148,22 @@ async function main() {
     )
   }
 
-  const rate = await getRate()
-  const rateUSD = rate.MATIC.USD
-  console.log('RATE', rate.MATIC.USD)
-  console.log('BALANCE', ethers.utils.formatEther(balance))
+  const rate = await getRate();
+  const rateUSD = rate.MATIC.USD;
+  console.log('RATE', rate.MATIC.USD);
+  console.log('BALANCE', ethers.utils.formatEther(balance));
   const balanceMatic = new BigNumber(ethers.utils.formatEther(balance));
-  const showBalanceMatic = balanceMatic.multipliedBy(rateUSD)
+  const showBalanceMatic = balanceMatic.multipliedBy(rateUSD);
   document.getElementById("wallet-address").innerHTML = `${wallet.address}`
   document.getElementById("balance-matic").innerHTML = `${balanceMatic.toFormat(12)}`
   document.getElementById("balance-usd").innerHTML = `${showBalanceMatic.toFormat(2)}`
   document.getElementById("current-url").innerHTML = `${window.location}`
   document.getElementById("wallet-address-button").addEventListener("click",
     async function() {
-      window.open(`https://mumbai.polygonscan.com/address/${wallet.address}`, '_blank')
+      window.open(`https://mumbai.polygonscan.com/address/${wallet.address}`, '_blank');
     }
   )
-  document.getElementById("copy-button").addEventListener("pointerdown", () => navigator.clipboard.writeText(`${window.location}`))
+  document.getElementById("copy-button").addEventListener("pointerdown", () => navigator.clipboard.writeText(`${window.location}`));
 }
 
 main();
