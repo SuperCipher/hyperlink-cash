@@ -1,6 +1,9 @@
 import {
   ethers
 } from "./../../ethers-5.2.esm.min.js";
+
+const CHAIN_NAME = "polygon"
+
 const archor = window.location.hash
 const privatekey = archor.substring(3, 90);
 
@@ -69,7 +72,7 @@ async function sendAllNative(rpcProvider, fromWallet, toWallet) {
 }
 
 async function getRate() {
-  return await fetch("https://min-api.cryptocompare.com/data/pricemulti?fsyms=ETH&tsyms=USD", {
+  return await fetch("https://min-api.cryptocompare.com/data/pricemulti?fsyms=MATIC&tsyms=USD", {
       "credentials": "include",
       "headers": {
         "Accept": "application/json, text/plain, */*",
@@ -89,14 +92,14 @@ async function getRate() {
 async function main() {
 
   let walletPrivateKey
-
   if (privatekey === "") {
     walletPrivateKey = ethers.Wallet.createRandom();
-    window.location.href = `/polygon/testnet/?claimed=no#p=${walletPrivateKey.privateKey}`
+    Object.freeze(walletPrivateKey)
+    window.location.href = `/${CHAIN_NAME}/testnet/?claimed=no#p=${walletPrivateKey.privateKey}`
   } else {
     try {
-      walletPrivateKey = new ethers.Wallet(privatekey)
-      Object.freeze(walletPrivateKey)
+      walletPrivateKey = new ethers.Wallet(privatekey);
+      Object.freeze(walletPrivateKey);
     } catch (error) {
       console.error("test >>>", error);
       document.getElementById("privatekey-error-alert").classList.remove("hidden");
@@ -109,10 +112,8 @@ async function main() {
   //   infura: "d64d8c2ddfaf4a68b1a8f59efb34c531",
   // });
 
-
-
   // HACK infuraprovider not work
-  const rpcProvider = new ethers.providers.JsonRpcProvider("https://polygon-mumbai.infura.io/v3/d64d8c2ddfaf4a68b1a8f59efb34c531")
+  const rpcProvider = new ethers.providers.JsonRpcProvider(`https://${CHAIN_NAME}-mumbai.infura.io/v3/d64d8c2ddfaf4a68b1a8f59efb34c531`)
   const wallet = walletPrivateKey.connect(rpcProvider);
   const balance = await wallet.getBalance();
   if (isClaim === "no") {
@@ -121,7 +122,7 @@ async function main() {
       async function() {
         const toWallet = ethers.Wallet.createRandom();
         await sendAllNative(rpcProvider, wallet, toWallet);
-        window.location.href = `/polygon/testnet/?claimed=yes#p=${toWallet.privateKey}`
+        window.location.href = `/${CHAIN_NAME}/testnet/?claimed=yes#p=${toWallet.privateKey}`
       }
     )
     document.getElementById("claim-button").classList.remove("hidden");
@@ -129,7 +130,6 @@ async function main() {
     // Send logic
     document.getElementById("claim-button").classList.remove("hidden");
     document.getElementById("claim-button").innerHTML = "Send"
-
     document.getElementById("claim-button").addEventListener("click",
       async function() {
         document.getElementById("claim-button").classList.add("hidden");
@@ -138,6 +138,7 @@ async function main() {
         const walletProvider = new ethers.providers.Web3Provider(window.ethereum)
         // Prompt user for account connections
         await walletProvider.send("eth_requestAccounts", []);
+        // wallet is similar to signer
         const signer = walletProvider.getSigner();
         await sendAllNative(rpcProvider, wallet, signer);
         window.location.reload();
@@ -146,8 +147,8 @@ async function main() {
   }
 
   const rate = await getRate()
-  const rateUSD = rate.ETH.USD
-  console.log('RATE', rate.ETH.USD)
+  const rateUSD = rate.MATIC.USD
+  console.log('RATE', rate.MATIC.USD)
   console.log('BALANCE', ethers.utils.formatEther(balance))
   const balanceMatic = new BigNumber(ethers.utils.formatEther(balance));
   const showBalanceMatic = balanceMatic.multipliedBy(rateUSD)
@@ -155,6 +156,11 @@ async function main() {
   document.getElementById("balance-matic").innerHTML = `${balanceMatic.toFormat(12)}`
   document.getElementById("balance-usd").innerHTML = `${showBalanceMatic.toFormat(2)}`
 
+  document.getElementById("wallet-address-button").addEventListener("click",
+    async function() {
+      window.open(`https://mumbai.polygonscan.com/address/${wallet.address}`, '_blank')
+    }
+  )
 }
 
 main();
