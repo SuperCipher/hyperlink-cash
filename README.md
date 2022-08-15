@@ -19,7 +19,7 @@ Wallet replacement
 -[ ] Increment fee after claim fail
 -[ ] Toast after create new wallet
 -[ ] Fail Toast
--[ ] Copy url button
+-[ ] separate send button
 -[ ] Mainnet Prod
 -[ ] Share button
 
