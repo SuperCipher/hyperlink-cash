@@ -3,7 +3,7 @@ output: dist
 url: hyperlink.cash
 branding:
   title: Hyperlink.cash
-  logo: /dist/hyperlink-cash-logo.svg
+  logo: hyperlink-cash-logo.svg
   label: v0.0.1
 links:
 - text: GitHub
