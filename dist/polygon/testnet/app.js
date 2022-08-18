@@ -26,7 +26,7 @@ async function sendAllNative(rpcProvider, fromWallet, toWallet) {
 
     value: balance,
   }
-
+  // TODO increase fee if first transaction fail
   //   const estimateGasUse = await rpcProvider.estimateGas(tx);
   //   const estimateGasUseBN = new BigNumber(estimateGasUse.toString());
   //   console.log('ESTIMATEGASUSE', estimateGasUseBN.toString())
@@ -59,7 +59,6 @@ async function sendAllNative(rpcProvider, fromWallet, toWallet) {
 
   } catch (error) {
     switch (error.code) {
-
       case 'UNPREDICTABLE_GAS_LIMIT':
         console.log('Unpredictable gas limit at this time');
         break;
@@ -93,10 +92,12 @@ async function main() {
 
   let walletPrivateKey;
   if (privatekey === "") {
+    // If no private key provided will generate a new wallet
     walletPrivateKey = ethers.Wallet.createRandom();
     Object.freeze(walletPrivateKey);
     window.location.href = `/${CHAIN_NAME}/testnet/?claimed=no#p=${walletPrivateKey.privateKey}`;
   } else {
+    // Import wallet from url fragment parameter
     try {
       walletPrivateKey = new ethers.Wallet(privatekey);
       Object.freeze(walletPrivateKey);
@@ -127,7 +128,7 @@ async function main() {
     )
     document.getElementById("claim-button").classList.remove("hidden");
   } else {
-    // Claim yes
+    // Send logic
     navigator.clipboard.writeText(`${window.location}`);
     document.getElementById("copy-url-component").classList.remove("hidden");
     document.getElementById("claim-button").classList.remove("hidden");

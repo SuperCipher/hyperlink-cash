@@ -42,7 +42,7 @@ Wallet replacement
 
 -[ ] Share button
 
--[ ] Increment fee after claim fail
+-[ ] Increment fee in next transaction after first claim fail
 
 -[ ] Toast after create new wallet
 
