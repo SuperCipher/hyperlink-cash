@@ -40,6 +40,8 @@ Wallet replacement
 
 -[ ] Mainnet Prod
 
+-[ ] link footer
+
 -[ ] Share button
 
 -[ ] QR Code
