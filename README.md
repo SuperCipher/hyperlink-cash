@@ -1,5 +1,5 @@
 # What is it
-Opensource, free forever, privacy focus and unify multi asset multi network in to one simple way to transact an asset.
+Opensource, free forever, privacy focus and unify multi-asset multi-network into one simple way to transact an asset.
 
 ## Goal
 
