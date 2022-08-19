@@ -1,3 +1,8 @@
+---
+label: Why do we need this
+icon: thumbsup
+---
+
 # Why do we need this
 Senders have to interact with the Receiver many times and ask them to do a lot of things before they can receive tips or gifts. This leads to a bad first-time user experience. Even experienced crypto investors don't want to own many wallets and download wallet every time a new network appears.
 
@@ -15,3 +20,4 @@ flowchart TD
     E --> C
 ```
 ## Receiver frictions
+Learning curve is high for blockchain beginner. For experience blockchain user it take a lot of time to familiarize with tool on different chain.

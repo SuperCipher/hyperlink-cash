@@ -1,10 +1,14 @@
+---
+label: Getting started
+icon: rocket
+---
 # Getting started
 
 ## For sender
 ### 1. Create wallet
 This will create an new empty Hyperlink.cash wallet
 
-[!button size="xl" target="blank" text="Create" icon="https://hyperlink.cash/hyperlink-cash-logo.svg"](https://hyperlink.cash/polygon/?claimed=no#p=)
+[!button size="2xl" target="blank" text="Create" icon="https://hyperlink.cash/hyperlink-cash-logo.svg"](https://hyperlink.cash/polygon/?claimed=no#p=)
 
 *Wanna try with testnet first?*
 

@@ -1,3 +1,8 @@
+---
+label: How it work
+icon: gear
+---
+
 # How it work
 
 Basically Hypelink.cash is a Web base wallet.

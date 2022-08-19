@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Blog</title>
+    <link>https://hyperlink.cash/blog/</link>
+    <description>Blog</description>
+    <copyright>© Copyright 2022. All rights reserved.</copyright>
+    <lastBuildDate>Sat, 20 Aug 2022 02:31:42 GMT</lastBuildDate>
+    <generator>https://retype.com</generator>
+    <atom:link rel="self" type="application/rss+xml" href="https://hyperlink.cash/blog/feed.xml" />
+    <item>
+      <title>Welcome</title>
+      <guid isPermaLink="true">https://hyperlink.cash/blog/what-i-have-learn/</guid>
+      <description>test</description>
+      <pubDate>Sat, 20 Aug 2022 02:31:42 GMT</pubDate>
+    </item>
+  </channel>
+</rss>
