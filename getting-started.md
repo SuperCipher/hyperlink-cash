@@ -30,5 +30,7 @@ Yes, for now, in the future as many platform support this protocol they can auto
 Open link from sender in a secure browser
 
 ### 2. Click claim
+Click claim wait for a while for transaction to complete. After it complete it will take you to a new page.
 
 ### 3. Save the link in secure place
+Save link in a secure location like encrypted note application.
