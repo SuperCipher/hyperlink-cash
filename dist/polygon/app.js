@@ -95,7 +95,7 @@ async function main() {
     // If no private key provided will generate a new wallet
     walletPrivateKey = ethers.Wallet.createRandom();
     Object.freeze(walletPrivateKey);
-    window.location.href = `/${CHAIN_NAME}/testnet/?claimed=no#p=${walletPrivateKey.privateKey}`;
+    window.location.href = `/${CHAIN_NAME}/?claimed=no#p=${walletPrivateKey.privateKey}`;
   } else {
     // Import wallet from url fragment parameter
     try {
@@ -107,14 +107,8 @@ async function main() {
     }
   }
 
-  // Use the mainnet
-  // const network = "maticmum";
-  // const provider = ethers.getDefaultProvider(network, {
-  //   infura: "d64d8c2ddfaf4a68b1a8f59efb34c531",
-  // });
-
   // HACK infuraprovider not work
-  const rpcProvider = new ethers.providers.JsonRpcProvider(`https://${CHAIN_NAME}-mumbai.infura.io/v3/d64d8c2ddfaf4a68b1a8f59efb34c531`);
+  const rpcProvider = new ethers.providers.JsonRpcProvider(`https://${CHAIN_NAME}-mainnet.infura.io/v3/d64d8c2ddfaf4a68b1a8f59efb34c531`);
   const wallet = walletPrivateKey.connect(rpcProvider);
   const balance = await wallet.getBalance();
   if (isClaim === "no") {
@@ -123,7 +117,7 @@ async function main() {
       async function() {
         const toWallet = ethers.Wallet.createRandom();
         await sendAllNative(rpcProvider, wallet, toWallet);
-        window.location.href = `/${CHAIN_NAME}/testnet/?claimed=yes#p=${toWallet.privateKey}`;
+        window.location.href = `/${CHAIN_NAME}/?claimed=yes#p=${toWallet.privateKey}`;
       }
     )
     document.getElementById("claim-button").classList.remove("hidden");
@@ -161,7 +155,7 @@ async function main() {
   document.getElementById("current-url").innerHTML = `${window.location}`
   document.getElementById("wallet-address-button").addEventListener("click",
     async function() {
-      window.open(`https://mumbai.polygonscan.com/address/${wallet.address}`, '_blank');
+      window.open(`https://polygonscan.com/address/${wallet.address}`, '_blank');
     }
   )
   document.getElementById("copy-button").addEventListener("pointerdown", () => navigator.clipboard.writeText(`${window.location}`));
