@@ -14,11 +14,11 @@ No need to communicate back and forth about address or network of the receiver.
 **Just send it!™** like a cash. When you want to give someone your cash you don't need to ask for their home address or if that person have a wallet.
 
 ### 3. Transparent
-All of the source code are readable. Most wallet are compressed or built in a way that the source code are not easily readable.
+All of the source codes are readable. Most wallets are compressed or built so that the source code is not easily readable.
 
 NOT US!
 
-Our source code is written in simple es6 and html no framework and minimize library usage so anyone can inspect and read our software easily in realtime.
+Our source code is written in simple es6 and html no framework and minimizes library usage so anyone can inspect and read our software easily in real time.
 
 ### 4. Trust minimize
 Our upcoming feature is to make library file readable is es6 as well and have multiple api aggregations and comparison also have our website be pinned on ipfs or Filecoin

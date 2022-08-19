@@ -1,3 +1,8 @@
+# Why do we need this
+Senders have to interact with the Receiver many times and ask them to do a lot of things before they can receive tips or gifts. This leads to a bad first-time user experience. Even experienced crypto investors don't want to own many wallets and download wallet every time a new network appears.
+
+By use Hyperlink.cash Sender and Receiver experience can be improved by delaying unnecessary steps like downloading a new wallet and learning how to use them. This can be exceptionally hard for crypto beginners or non tech-savvy user
+
 ## Sender friction
 
 ```mermaid

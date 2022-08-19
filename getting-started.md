@@ -14,8 +14,7 @@ This will create an new empty Hyperlink.cash wallet
 Copy the address from Hyperlink.cash and sent asset into the Hyperlink.cash wallet (Currently only support Matic)
 
 ### 3. Send the URL to receiver
-Send Hyperlink.cash link to receiver via secure messaging method e.g. encryted messaging app, encrypted email, encrypted SMS
-link should look like this
+Send Hyperlink.cash link to a receiver via secure messaging method e.g., encrypted messaging app, encrypted email, encrypted SMS a link should look like this
 !!!warning Warning
 This is demo link do not used
 !!!
