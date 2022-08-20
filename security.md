@@ -17,6 +17,8 @@ But if I have to list all the wallet base on convenience simplicity transparency
 ### Attack surface
 - Browser user open the URL in
 
+- Browser history (This can be a good thing since most people lost their crypto because they forget the password)
+
 - Messaging method *(Not a concern if QR code feature arrived)*
 
 
