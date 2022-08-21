@@ -25,13 +25,13 @@ async function sendAllNative(rpcProvider, fromWallet, toWallet) {
 
     value: balance,
   }
-  // TODO increase fee if first transaction fail
 
   const estimateGasUse = await rpcProvider.estimateGas(tx);
   const transactionPrice = gasPrice.mul(estimateGasUse);
   const boostFee = transactionPrice.mul(5).div(100)
+  // TODO increase fee if first transaction fail
   const boostTransactionPrice = transactionPrice.add(boostFee)
-  const balanceAfterTx = balance.sub(boostTransactionPrice);
+  const balanceAfterTx = balance.sub(transactionPrice);
 
   tx = {
     to: toWallet.getAddress(),
@@ -82,12 +82,6 @@ async function main() {
       document.getElementById("privatekey-error-alert").classList.remove("hidden");
     }
   }
-
-  // Use the mainnet
-  // const network = "maticmum";
-  // const provider = ethers.getDefaultProvider(network, {
-  //   infura: "d64d8c2ddfaf4a68b1a8f59efb34c531",
-  // });
 
   // HACK infuraprovider not work
   const rpcProvider = new ethers.providers.JsonRpcProvider(`https://${CHAIN_NAME}-mumbai.infura.io/v3/d64d8c2ddfaf4a68b1a8f59efb34c531`);
