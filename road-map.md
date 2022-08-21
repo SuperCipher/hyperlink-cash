@@ -1,5 +1,5 @@
 ---
-label: Up coming feature
+label: Upcoming feature
 icon: versions
 ---
 ## Up coming feature
