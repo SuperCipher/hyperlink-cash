@@ -4,17 +4,16 @@ icon: versions
 ---
 ## Up coming feature
 ### Claim page
+
 -[ ] Explain video
-
--[ ] Landing page
-
--[ ] Mainnet Prod
-
--[ ] link footer
 
 -[ ] Share button
 
 -[ ] QR Code
+
+-[ ] Gift card printing
+
+-[ ] Multi Link create
 
 -[ ] Increment fee in next transaction after first claim fail
 
@@ -24,7 +23,7 @@ icon: versions
 
 -[ ] separate send button
 
--[ ] exchange integration for fiat cash out
+-[ ] Exchange integration for fiat cash out
 
 ## Trust minimize
 
