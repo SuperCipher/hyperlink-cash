@@ -7,7 +7,10 @@ icon: git-compare
 
 ## Decentralize solution
 -
+
 ## Centralize solution
+
+Signup require
 
 - https://www.buymeacoffee.com/
 
