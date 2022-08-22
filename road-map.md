@@ -5,8 +5,6 @@ icon: versions
 ## Up coming feature
 ### Claim page
 
--[ ] Explain video
-
 -[ ] Share button
 
 -[ ] QR Code
